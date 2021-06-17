@@ -13,7 +13,8 @@ export function sendMail(email:string,obj:{subject?:string,text?:string}) {
       let mailConfig = {
         service: 'gmail',
         auth: {
-       
+          user: process.env.user||'',
+          pass: process.env.password||''
         }
       };
       nodemailer.createTransport(mailConfig).sendMail(mailOptions, 
