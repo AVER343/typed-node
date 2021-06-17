@@ -1,0 +1,4 @@
+CREATE TABLE API_PERMISSIONS(
+   id            SERIAL       PRIMARY KEY, 
+   api_name      VARCHAR(50) NOT NULL UNIQUE
+);
