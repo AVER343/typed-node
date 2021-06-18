@@ -1,5 +1,5 @@
 CREATE TABLE JOB_TABLE(
-   id            SERIAL       PRIMARY KEY, 
+   id            BIGSERIAL       PRIMARY KEY, 
    "type"        VARCHAR(50) NOT NULL,
    data          JSONB DEFAULT '{}',
    user_id       BIGINT NOT NULL ,

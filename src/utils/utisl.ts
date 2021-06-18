@@ -6,7 +6,8 @@ import { User_Interface } from '../interfaces/user';
 
 export interface RequestCustom extends Request
 {
-    user: User_Interface;
+    __API_NAME__: string;
+    user?:User_Interface;
 }
 export const randomNumber=(numberOfDigits:number)=>{
     let toChooseFrom= '0123456789'

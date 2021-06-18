@@ -5,6 +5,7 @@ import Server from "../server";
 import { BULL_QUEUES } from "../services";
 import { QUEUE_TYPE } from "../services/bull/utils/queue-names";
 import { randomNumber } from "../utils/utisl";
+import { ROLES } from "../utils/roles";
 const hasKey = (obj:any,key:string)=>{
     return obj && obj[key]
 }
@@ -18,7 +19,7 @@ class User{
         return this.user
     }
     static  async findOne(user:User_Interface){
-        let query=`SELECT username,created_time,id,modified_time,user_verified FROM USERS `;
+        let query=`SELECT username,created_time,id,modified_time,user_verified,USER_ROLE_TYPE_ID FROM USERS `;
         let args:string[]= []
         let argumentsCanBeSearched= ['username'] // Add the keys that you want the unique columns for.
         argumentsCanBeSearched.forEach((e)=>{
@@ -67,7 +68,7 @@ class User{
     }
     public async deleteFields(){
         try{
-            let onlyFields = ['username','created_time','id','modified_time','user_verified']
+            let onlyFields = ['username','created_time','id','modified_time','user_verified','user_role_type_id']
             let new_obj:any = {}
             onlyFields.forEach((e)=>{
                 new_obj[e]=hasKey(this.user,e)
@@ -82,9 +83,9 @@ class User{
        try{
             let encryptedPassword = await bcrypt.hash(user.password!,8)
             let saved_user = await User.pool.query(`INSERT INTO 
-                                                    USERS(username,password,created_time,modified_time) 
-                                                    VALUES($1,$2,now(),now()) returning *`,
-                                                    [user.username,encryptedPassword])
+                                                    USERS(username,password,created_time,modified_time,user_role_type_id) 
+                                                    VALUES($1,$2,now(),now(),(SELECT id from USER_ROLE_TYPE WHERE user_role= $3)) returning *`,
+                                                    [user.username,encryptedPassword,ROLES.DEFAULT])
             this.user = new User(saved_user.rows[0]).getUser()
        }
        catch(e:any){

@@ -13,7 +13,7 @@ Login.post('/users/login',
                 let result = validationResult(req)
                 if(!result.isEmpty())
                 {
-                    return res.send({errors:result.array()})
+                    return HandleResponse(res,result.array(),'error')
                 }
                 let user  = (await User.findOne(req.body))
                 if(!user)

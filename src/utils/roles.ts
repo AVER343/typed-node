@@ -1,6 +1,13 @@
 
 // import { createTypes } from 'reduxsauce'
-export const enum ROLES {
+export enum ROLES {
   ADMIN = 'ADMIN',
-  DEFAULT = 'DEFAULT'
+  DEFAULT = 'DEFAULT',
+
+}
+
+export enum API_NAMES {
+  POST_ROLE= 'POST_ROLE',
+  GET_ROLE='GET_ROLE',
+  ME = 'ME'
 }

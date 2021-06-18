@@ -21,6 +21,7 @@ export function sendMail(email:string,obj:{subject?:string,text?:string}) {
                 (err:Error|null,
             info:nodemailer.SentMessageInfo) => {
                 if (err) {
+                  console.log(err)
                 reject(err);
                 } else {
                 resolve(info);

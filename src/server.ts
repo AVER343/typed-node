@@ -8,6 +8,8 @@ import { BULL_QUEUES } from './services';
 // import { job } from './interfaces/user';
 import { sendMail } from './utils/send_email';
 import { QUEUES } from './services/bull/utils/queue-names';
+// import { insert_API_Names, insert_ROLES } from './utils/insertToDb';
+// import { API_NAMES } from './utils/roles';
 // import { QUEUE_NAME } from './services/bull/utils/queue-names';
 class Server{
     private app;
@@ -17,15 +19,20 @@ class Server{
         {
             Server.pool = pool
             this.app = express()
+            this.insertToDb()
             this.confiureServices()
             this.configureServer()
             this.startServices()
+            this.setRoles()
             Server.PORT = PORT
         }
     public useRoutes(router:Router){
         this.app.use(router)
     }
-    start(){
+    private async setRoles(){
+
+    }
+    public start(){
         this.app.listen(Server.PORT,()=>{
             console.log(`Server running at ${Server.PORT}`)
         })
@@ -69,6 +76,10 @@ class Server{
               console.log(e)
           }
         })
+    }
+    private insertToDb(){
+        // insert_API_Names()
+        // insert_ROLES()
     }
 }
 export default Server

@@ -5,4 +5,5 @@ export interface User_Interface{
     jwt?:string;
     id?:number;
     user_verified?:boolean;
+    user_role_type_id?:string;
 }

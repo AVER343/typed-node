@@ -1,8 +1,10 @@
 import express ,{Request,Response} from 'express'
 import {body,validationResult} from 'express-validator'
+// import set_API_NAME from '../../../middleware/setAPIName_checkpermission'
 import User from '../../../orm/user'
 // import { BULL_QUEUES } from '../../../services'
 import HandleResponse from '../../../utils/handleResponse'
+// import { API_NAMES } from '../../../utils/roles'
 const Signup = express.Router()
 Signup.post('*/signup',
         body('username').isEmail().withMessage(('Invalid email !')),
