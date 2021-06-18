@@ -1,7 +1,7 @@
 import Bull,{Queue} from 'bull'
 // import { job } from '../../interfaces/user';
 // import  nodemailer  from 'nodemailer'
-import { QUEUE_NAME, QUEUE_TYPE} from './utils/queue-names'
+import { QUEUE_TYPE} from './utils/queue-names'
 // import {PartialRecord} from './utils/queue-names'
 class QUEUES{
     //todo redis_que interface
@@ -11,7 +11,7 @@ class QUEUES{
         this.createQueues()
     }
     private async createQueues(){
-        let keys = Object.keys(QUEUE_NAME);
+        let keys = Object.keys(QUEUE_TYPE);
         QUEUES.REDIS_QUEUE ={}
         keys.forEach((elem:string)=>QUEUES.REDIS_QUEUE[elem]= new Bull(elem, {
             redis: {
@@ -21,8 +21,9 @@ class QUEUES{
           }))
           for(let queues in QUEUES.REDIS_QUEUE)
           {
-            await QUEUES.REDIS_QUEUE[queues].clean(0)
+            await QUEUES.REDIS_QUEUE[queues].clean(1)
           }
+          
     }
     static async listener(queue_name:QUEUE_TYPE,callback:(job:any)=>void){
         QUEUES.REDIS_QUEUE[queue_name].process(callback);
@@ -31,6 +32,7 @@ class QUEUES{
         QUEUES.REDIS_QUEUE[queue_name].on('completed',callback);
     }
     static async publisher(queue_name:QUEUE_TYPE,data:any,options:Bull.JobOptions){
+      console.log(options)
         QUEUES.REDIS_QUEUE[queue_name].add(data,{attempts:5,backoff:5000,...options})
     }
 }

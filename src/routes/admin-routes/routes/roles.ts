@@ -11,7 +11,7 @@ const Roles = express.Router()
 Roles.post('*/roles',
         authentication,
         set_API_NAME(API_NAMES.POST_ROLE),
-        body('username').isEmail().withMessage(('Invalid email !')),
+        body('email').isEmail().withMessage(('Invalid email !')),
         body('user_role').isString().custom((value:string, { req }) => {
             if (!Object.keys(ROLES).includes(value.toUpperCase())) {
               throw new Error('Role doesnt exist !');
@@ -25,8 +25,8 @@ Roles.post('*/roles',
                 {
                     return HandleResponse(res,result.array(),'error')
                 }
-            let {username,user_role}:{username:string,user_role:string} = req.body
-            let user = await User.findOne({username})
+            let {email,user_role}:{email:string,user_role:string} = req.body
+            let user = await User.findOne({email})
             if(!user)
             {
                 return HandleResponse(res,'User does not exist !','error')
@@ -35,7 +35,7 @@ Roles.post('*/roles',
                                      SET user_role_type_id=(SELECT id FROM USER_ROLE_TYPE WHERE user_role=$2) 
                                      WHERE id=$1`,
                                 [user.getUser()['id'],user_role.toUpperCase()])
-            user = await User.findOne({username})
+            user = await User.findOne({email})
             return res.send(user?.getUser())
         }
         catch(e:any){

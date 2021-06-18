@@ -1,7 +1,7 @@
 export interface User_Interface{
+    email?:string;
     username?:string;
     password?:string;
-    email?:string;
     jwt?:string;
     id?:number;
     user_verified?:boolean;

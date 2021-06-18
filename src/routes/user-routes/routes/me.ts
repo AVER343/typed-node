@@ -8,8 +8,7 @@ Me.post('*/me',
           authentication,
           set_API_NAME(API_NAMES.ME),
         async(req:any,res:Response,Next:NextFunction)=>{
-           try{
-                    
+           try{ 
                 return res.send(req.user)
            }
            catch(e:any){

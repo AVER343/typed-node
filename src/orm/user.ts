@@ -19,9 +19,9 @@ class User{
         return this.user
     }
     static  async findOne(user:User_Interface){
-        let query=`SELECT username,created_time,id,modified_time,user_verified,USER_ROLE_TYPE_ID FROM USERS `;
+        let query=`SELECT email,created_time,id,modified_time,user_verified,USER_ROLE_TYPE_ID,username FROM USERS `;
         let args:string[]= []
-        let argumentsCanBeSearched= ['username'] // Add the keys that you want the unique columns for.
+        let argumentsCanBeSearched= ['email','username'] // Add the keys that you want the unique columns for.
         argumentsCanBeSearched.forEach((e)=>{
             if(hasKey(user,e))
             {
@@ -30,13 +30,14 @@ class User{
                     query = query + ' WHERE '
                 }
                 else{
-                    query = ' or '
+                    query = query + ' or '
                 }
                 args.push(hasKey(user,e))
                 query = query + (e).toString() +`= $${args.length}` ;
             }
         })
         query = query + ' LIMIT 1 ;'
+        console.log(query,args)
        let result =  await User.pool.query(query,args)
         return result.rows[0] 
                 ? new User(result.rows[0])
@@ -68,7 +69,7 @@ class User{
     }
     public async deleteFields(){
         try{
-            let onlyFields = ['username','created_time','id','modified_time','user_verified','user_role_type_id']
+            let onlyFields = ['email','created_time','id','modified_time','user_verified','user_role_type_id','username']
             let new_obj:any = {}
             onlyFields.forEach((e)=>{
                 new_obj[e]=hasKey(this.user,e)
@@ -83,9 +84,9 @@ class User{
        try{
             let encryptedPassword = await bcrypt.hash(user.password!,8)
             let saved_user = await User.pool.query(`INSERT INTO 
-                                                    USERS(username,password,created_time,modified_time,user_role_type_id) 
-                                                    VALUES($1,$2,now(),now(),(SELECT id from USER_ROLE_TYPE WHERE user_role= $3)) returning *`,
-                                                    [user.username,encryptedPassword,ROLES.DEFAULT])
+                                                    USERS(email,password,created_time,modified_time,user_role_type_id,username) 
+                                                    VALUES($1,$2,now(),now(),(SELECT id from USER_ROLE_TYPE WHERE user_role= $3),$4) returning *`,
+                                                    [user.email,encryptedPassword,ROLES.DEFAULT,user.username])
             this.user = new User(saved_user.rows[0]).getUser()
        }
        catch(e:any){
@@ -109,7 +110,7 @@ class User{
        
     }
     static async sendEmail(data:{email:string,OTP:string},priority:number|undefined=3,user_id:number|null=null){
-        let queue_type:QUEUE_TYPE= `SEND_EMAIL_HIGH_PRIORITY`
+        let queue_type:QUEUE_TYPE= QUEUE_TYPE.SEND_EMAIL_HIGH_PRIORITY
         await Server.pool.query('BEGIN')
         //    let addedActiveJobsInQueue =  await Server.pool.query('INSERT INTO QUEUE_ACTIVE(type,data,user_id) VALUES($1, $2::JSONB, $3) returning id;',
         //                                     [queue_type,{email},user_id]  )
@@ -118,11 +119,11 @@ class User{
         await Server.pool.query('COMMIT');
         BULL_QUEUES.publisher(queue_type,data,{priority,jobId:saved_job.rows[0]['id']})
     }
-    static async getOTP(username:string){
+    static async getOTP(email:string){
         try{
             let OTP = randomNumber(6)
             await Server.pool.query('BEGIN')
-            await Server.pool.query('INSERT INTO USER_OTP(OTP,username) VALUES($1,$2);',[OTP,username])
+            await Server.pool.query('INSERT INTO USER_OTP(OTP,email) VALUES($1,$2);',[OTP,email])
             await Server.pool.query('COMMIT')
             return OTP
         }

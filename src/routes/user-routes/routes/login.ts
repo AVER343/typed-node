@@ -6,7 +6,7 @@ import HandleResponse from '../../../utils/handleResponse'
 
 const Login = express.Router()
 Login.post('/users/login',
-        body('username').isEmail().withMessage(('Invalid email !')),
+        body('email').isEmail().withMessage(('Invalid email !')),
         body('password').isLength({min:5}).withMessage(('Invalid password !')),
         async(req:Request,res:Response)=>{
            try{
