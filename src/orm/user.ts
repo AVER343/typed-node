@@ -109,7 +109,7 @@ class User{
         }
        
     }
-    static async sendEmail(data:{email:string,OTP:string},priority:number|undefined=3,user_id:number|null=null){
+    static async sendEmail(data:any,priority:number|undefined=3,user_id:number|null=null){
         let queue_type:QUEUE_TYPE= QUEUE_TYPE.SEND_EMAIL_HIGH_PRIORITY
         await Server.pool.query('BEGIN')
         //    let addedActiveJobsInQueue =  await Server.pool.query('INSERT INTO QUEUE_ACTIVE(type,data,user_id) VALUES($1, $2::JSONB, $3) returning id;',
@@ -119,7 +119,7 @@ class User{
         await Server.pool.query('COMMIT');
         BULL_QUEUES.publisher(queue_type,data,{priority,jobId:saved_job.rows[0]['id']})
     }
-    static async getOTP(email:string){
+    public async getOTP(email:string){
         try{
             let OTP = randomNumber(6)
             await Server.pool.query('BEGIN')
@@ -131,5 +131,18 @@ class User{
             throw new Error(e.message||'Something went wrong with OTP !')
         }
     }
+    // public async verifyOTP(OTP:string){
+    //     try{
+    //         let saved_OTP = await Server.pool.query(`UPDATE USER_OTP UO
+    //                                             SET OTP = OTP + 1
+    //                                             WHERE id = (SELECT max(id) FROM USER_OTP WHERE user_id= $1)
+    //                                             and OTP = $2 returning *`,
+    //                                             [this.getUser().email,OTP])
+    //         console.log(saved_OTP)
+    //     }
+    //     catch(e){
+
+    //     }
+    // }
 }
 export default User

@@ -1,15 +1,15 @@
 import nodemailer = require('nodemailer');
 import Mail = require('nodemailer/lib/mailer');
 
-export function sendMail(email:string,obj:{subject?:string,text?:string}) {
+export function sendMail(data:any,obj:{subject?:string,text?:string}) {
   console.log(('email'))
     return new Promise((resolve, reject) => {
       let mailOptions:Mail.Options = {
         from: 'fromuser@domain.com',
-        to: email,
+        to: data.email,
         subject: obj.subject||'',
         text: obj.text||'',
-        html:'<h2>HELLO KITTY !</h2>'        
+        html:`<h2>${JSON.stringify(data)}</h2>`        
       };
       let mailConfig = {
         service: 'gmail',

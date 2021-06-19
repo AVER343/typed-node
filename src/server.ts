@@ -62,7 +62,7 @@ class Server{
         //setup listeners for corresponding types
         BULL_QUEUES.listener(QUEUE_TYPE.SEND_EMAIL_HIGH_PRIORITY,async(job:any)=>{
             const data:{email:string} = job.data
-            await sendMail(data.email,{subject:'',text:`<h1>MY NAME</h1>`})
+            await sendMail(data,{subject:'',text:`<h1>MY NAME</h1>`})
         })
         BULL_QUEUES.completion(QUEUE_TYPE.SEND_EMAIL_HIGH_PRIORITY,async(job)=>{
           try{

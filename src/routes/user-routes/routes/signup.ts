@@ -38,7 +38,7 @@ Signup.post('*/signup',
                 //user doesnt exist ,then save (creates new)
                 let new_user = new User(req.body)
                 await new_user.save()
-                let OTP = await User.getOTP(req.body.email!)
+                let OTP = await new_user.getOTP(req.body.email!)
                 User.sendEmail({email:req.body.email,OTP:OTP},undefined,new_user.getUser().id)
             return HandleResponse(res,'Successfully signed up !','success')
            }
