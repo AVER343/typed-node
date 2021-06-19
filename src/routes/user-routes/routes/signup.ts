@@ -3,7 +3,7 @@ import {body,validationResult} from 'express-validator'
 // import set_API_NAME from '../../../middleware/setAPIName_checkpermission'
 import User from '../../../orm/user'
 // import { BULL_QUEUES } from '../../../services'
-import HandleResponse from '../../../utils/handleResponse'
+import HandleResponse, { Messages } from '../../../utils/handleResponse'
 // import { API_NAMES } from '../../../utils/roles'
 const Signup = express.Router()
 Signup.post('*/signup',
@@ -28,11 +28,11 @@ Signup.post('*/signup',
                 {
                   if(user.getUser().email==req.body.email)
                   {
-                    return HandleResponse(res,'You already have an account with us !','error')
+                    return HandleResponse(res,Messages.EMAIL_ALREADY_IN_USE,'error')
                   }
                   if(user.getUser().username==req.body.username)
                   {
-                    return HandleResponse(res,'Username already taken !','error')
+                    return HandleResponse(res,Messages.USERNAME_TAKEN,'error')
                   }
                 }
                 //user doesnt exist ,then save (creates new)
@@ -40,7 +40,7 @@ Signup.post('*/signup',
                 await new_user.save()
                 let OTP = await new_user.getOTP(req.body.email!)
                 User.sendEmail({email:req.body.email,OTP:OTP},undefined,new_user.getUser().id)
-            return HandleResponse(res,'Successfully signed up !','success')
+            return HandleResponse(res,Messages.SIGNED_UP,'success')
            }
            catch(e:any){
              console.log(e)

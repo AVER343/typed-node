@@ -80,7 +80,7 @@ class User{
              throw new Error(e.message)
         }
      }
-    public  async createUser(user:User_Interface){
+    private  async createUser(user:User_Interface){
        try{
             let encryptedPassword = await bcrypt.hash(user.password!,8)
             let saved_user = await User.pool.query(`INSERT INTO 
@@ -93,7 +93,7 @@ class User{
             throw new Error(e)
        }
     }  
-    public async updateUser(user:User_Interface){
+    private async updateUser(user:User_Interface){
         // let canUpdateUserInfo =['password'] 
         let updated_user 
         if(user.password)
@@ -131,18 +131,45 @@ class User{
             throw new Error(e.message||'Something went wrong with OTP !')
         }
     }
-    // public async verifyOTP(OTP:string){
-    //     try{
-    //         let saved_OTP = await Server.pool.query(`UPDATE USER_OTP UO
-    //                                             SET OTP = OTP + 1
-    //                                             WHERE id = (SELECT max(id) FROM USER_OTP WHERE user_id= $1)
-    //                                             and OTP = $2 returning *`,
-    //                                             [this.getUser().email,OTP])
-    //         console.log(saved_OTP)
-    //     }
-    //     catch(e){
-
-    //     }
-    // }
+    public async isCorrectOTP(OTP:string){
+        try{
+            let isCorrectOTP_var:Boolean = false;
+            await Server.pool.query('BEGIN')
+            let saved_OTP = await Server.pool.query(`UPDATE USER_OTP UO
+                                                SET OTP_ACTIVE = false
+                                                WHERE id = (SELECT max(id) FROM USER_OTP WHERE email = $1)
+                                                and OTP = $2 
+                                                and OTP_ACTIVE  = true
+                                                and generated_on + interval '15 minutes'> now()
+                                                and OTP_TRIED_FOR < 4
+                                                returning *`,
+                                                [this.getUser().email,OTP])
+            if(saved_OTP.rowCount==1)
+            {
+                isCorrectOTP_var = true
+                try{
+                    await Server.pool.query(`DELETE FROM USER_OTP UO
+                                    WHERE email = $1
+                                    returning *`,
+                                    [this.getUser().email])
+                }
+                catch(e){
+                    console.log(e)
+                }
+            }
+           if(!isCorrectOTP_var)
+           {
+                await Server.pool.query(`UPDATE USER_OTP UO
+                SET OTP_TRIED_FOR =  case when OTP_TRIED_FOR + 1 < 5 then OTP_TRIED_FOR + 1 else 4 end
+                WHERE id = (SELECT max(id) FROM USER_OTP WHERE email = $1)
+                returning *`, [this.getUser().email])
+            }
+            await Server.pool.query('COMMIT')
+            return isCorrectOTP_var
+        }
+        catch(e:any){
+            throw new Error(e.message)
+        }
+    }
 }
 export default User

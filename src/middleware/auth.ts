@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import HandleResponse from '../utils/handleResponse'
+import HandleResponse, { Messages } from '../utils/handleResponse'
 import User from '../orm/user'
 import { hasKey} from '../utils/utisl'
 
@@ -7,7 +7,7 @@ let authentication =async(req:any,res:any,next:any)=>{
    try{
        if(!req.cookies.JWT)
        {
-            return HandleResponse(res,'User is not authenticated !','error')
+            return HandleResponse(res,Messages.UNAUTHENTICATED,'error')
        }
         const JWT = req.cookies.JWT 
         let verified_user = await jwt.verify(JWT,`process.env.JWT_SECRET`)

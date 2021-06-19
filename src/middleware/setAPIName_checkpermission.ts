@@ -1,6 +1,6 @@
 import { Response , NextFunction} from "express";
 import Server from "../server";
-import HandleResponse from "../utils/handleResponse";
+import HandleResponse, { Messages } from "../utils/handleResponse";
 // import Server from "../server";
 // import HandleResponse from "../utils/handleResponse";
 import { API_NAMES } from "../utils/roles";
@@ -29,7 +29,7 @@ const set_API_NAME=(api_name:API_NAMES)=>{
            const has_permission = await hasPermission(req.user?.user_role_type_id,api_name,req.user?.id)
            if(!has_permission)
            {
-               return HandleResponse(res,'User has not yet been authorized.Contact admin .','error')
+               return HandleResponse(res,Messages.UNAUTHORIZED,'error')
            }
            return next();
         }

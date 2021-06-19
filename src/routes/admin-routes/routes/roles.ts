@@ -4,7 +4,7 @@ import authentication from '../../../middleware/auth'
 import set_API_NAME from '../../../middleware/setAPIName_checkpermission'
 import User from '../../../orm/user'
 import Server from '../../../server'
-import HandleResponse from '../../../utils/handleResponse'
+import HandleResponse, { Messages } from '../../../utils/handleResponse'
 import { API_NAMES, ROLES } from '../../../utils/roles'
 
 const Roles = express.Router()
@@ -29,7 +29,7 @@ Roles.post('*/roles',
             let user = await User.findOne({email})
             if(!user)
             {
-                return HandleResponse(res,'User does not exist !','error')
+                return HandleResponse(res,Messages.USER_NOT_EXIST,'error')
             }
             await Server.pool.query(`UPDATE USERS 
                                      SET user_role_type_id=(SELECT id FROM USER_ROLE_TYPE WHERE user_role=$2) 

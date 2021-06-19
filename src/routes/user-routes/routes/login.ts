@@ -1,11 +1,11 @@
 import express ,{Request,Response} from 'express'
 import {body,validationResult} from 'express-validator'
 import User from '../../../orm/user'
-import HandleResponse from '../../../utils/handleResponse'
+import HandleResponse, { Messages } from '../../../utils/handleResponse'
 // import { ROLES } from '../../../utils/roles'
 
 const Login = express.Router()
-Login.post('/users/login',
+Login.post('*/login',
         body('email').isEmail().withMessage(('Invalid email !')),
         body('password').isLength({min:5}).withMessage(('Invalid password !')),
         async(req:Request,res:Response)=>{
@@ -18,11 +18,11 @@ Login.post('/users/login',
                 let user  = (await User.findOne(req.body))
                 if(!user)
                 {
-                    return HandleResponse(res,'User does not exist !','error')
+                    return HandleResponse(res,Messages.USER_NOT_EXIST,'error')
                 }
                 if(!user.getUser()['user_verified'])
                 {
-                    return HandleResponse(res,'Email has not yet been verified !','error')
+                    return HandleResponse(res,Messages.EMAIL_NOT_VERIFIED,'error')
                 }
                 let JWT = await user.setJWT()
                 // console.log()
