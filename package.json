@@ -43,6 +43,7 @@
     "redis": "^3.1.2",
     "reduxsauce": "^1.2.0",
     "shelljs": "^0.8.4",
+    "swagger-ui-express": "^4.1.6",
     "ts-node": "^10.0.0",
     "ts-node-dev": "^1.1.6",
     "typescript-interface-generator": "^0.0.6",
