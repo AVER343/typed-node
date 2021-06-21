@@ -15,8 +15,8 @@ class QUEUES{
         QUEUES.REDIS_QUEUE ={}
         keys.forEach((elem:string)=>QUEUES.REDIS_QUEUE[elem]= new Bull(elem, {
             redis: {
-              host: '127.0.0.1',
-              port: 6379
+              host: 'redis-server',
+              port:6379
             }
           }))
           for(let queues in QUEUES.REDIS_QUEUE)

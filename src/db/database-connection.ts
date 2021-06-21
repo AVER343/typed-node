@@ -6,6 +6,7 @@ config = {
   database:'postgres',
   password:'postgres',
   user:'postgres',
+  host:'postgres-server'
 }
 // if(process.env.NODE_ENV=='production')
 //     {
@@ -21,12 +22,12 @@ pool.connect((err:Error, client:PoolClient, release:any) => {
     if (err) {
       return console.error('Error acquiring client', err.stack)
     }
-    client.query('SELECT NOW() as now', (err:Error, result:QueryResult) => {
+    client.query('SELECT NOW() as now', async(err:Error, result:QueryResult) => {
       release()
       if (err) {
         return console.error('Error executing query', err.stack)
       }
-      console.log('CONNECTION SUCCESSFUL at '+result.rows[0].now)
+      console.error('CONNECTION SUCCESSFUL at '+result.rows[0].now)
     })
   })
 export default pool

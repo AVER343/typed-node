@@ -12,18 +12,20 @@ import { QUEUES, QUEUE_TYPE } from './services/bull/utils/queue-names';
 // import { API_NAMES } from './utils/roles';
 // import { QUEUE_NAME } from './services/bull/utils/queue-names';
 class Server{
-    private app;
+    private app:any;
     static PORT:number;
     static pool:Pool= pool;
     constructor(PORT:number)
         {
-            Server.pool = pool
-            this.app = express()
+            Server.pool = pool;
+            (async()=>{
+                this.app = express()
             this.insertToDb()
             this.confiureServices()
             this.configureServer()
             this.startServices()
             this.setRoles()
+            })()
             Server.PORT = PORT
         }
     public useRoutes(router:Router){
@@ -42,7 +44,7 @@ class Server{
         this.app.use(express.urlencoded({extended:true}))
         this.app.use(cookieParser())
         this.app.use(cors({credentials:true,origin:true}))
-        this.app.use(function(req, res, next) {
+        this.app.use(function(req:any, res:any, next:any) {
             res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
             res.header('Access-Control-Allow-Credentials', `true`);
             res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -80,7 +82,7 @@ class Server{
           }
         })
     }
-    private insertToDb(){
+    private  async insertToDb(){
         // insert_API_Names()
         // insert_ROLES()
     }

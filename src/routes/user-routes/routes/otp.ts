@@ -91,7 +91,7 @@ OTP.post('/verify/account',
                user.getUser().user_verified = true
               await user.save()
               await Server.pool.query('UPDATE USERS SET user_verified = true WHERE id = $1',[user.getUser().id])
-              const JWT  = user.setJWT()
+              const JWT  = await user.setJWT()
               return res.cookie('JWT',JWT,{maxAge:120*60*1000}).send(user.getUser())
            }
            catch(e:any){
