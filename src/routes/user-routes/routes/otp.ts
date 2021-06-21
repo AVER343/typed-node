@@ -1,15 +1,16 @@
 import express ,{Request,Response} from 'express'
 import {body, header,validationResult} from 'express-validator'
+import set_API_NAME from '../../../middleware/setAPIName_checkpermission'
 import User from '../../../orm/user'
 import Server from '../../../server'
 // import Server from '../../../server'
 import HandleResponse, { Messages } from '../../../utils/handleResponse'
+import { API_NAMES } from '../../../utils/roles'
 import { hasKey } from '../../../utils/utisl'
-// import { ROLES } from '../../../utils/roles'
 
 const OTP = express.Router()
-OTP.post('/update',
-          //use this to update password
+OTP.post('/update', 
+     set_API_NAME(API_NAMES.POST_UPDATE_OTP),
      body('email').isEmail().withMessage(('Invalid email !')),
      body('otp').isLength({min:1}).withMessage(('Invalid OTP !')),
         async(req:Request,res:Response)=>{

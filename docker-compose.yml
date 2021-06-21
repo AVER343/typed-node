@@ -14,6 +14,7 @@ services:
         - ./docker/postgres/data/data/pg_hba.conf:/var/lib/postgresql/app_data/pg_hba.conf
         - ./src/db/sql/CREATE_TABLES.sql:/docker-entrypoint-initdb.d/CREATE_TABLES.sql
         - ./src/db/sql/INSERT_TO_TABLES.sql:/docker-entrypoint-initdb.d/INSERT_TO_TABLES.sql
+        - ./src/db/sql/CREATE_FUNCTIONS.sql:/docker-entrypoint-initdb.d/CREATE_FUNCTIONS.sql
   node-app:
     build: .
     ports: 

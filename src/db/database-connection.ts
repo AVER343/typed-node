@@ -23,7 +23,6 @@ pool.connect((err:Error, client:PoolClient, release:any) => {
       return console.error('Error acquiring client', err.stack)
     }
     client.query('SELECT NOW() as now', async(err:Error, result:QueryResult) => {
-      release()
       if (err) {
         return console.error('Error executing query', err.stack)
       }

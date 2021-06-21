@@ -9,5 +9,6 @@ export enum ROLES {
 export enum API_NAMES {
   POST_ROLE= 'POST_ROLE',
   GET_ROLE='GET_ROLE',
-  ME = 'ME'
+  ME = 'ME',
+  POST_UPDATE_OTP = 'POST_UPDATE_OTP'
 }

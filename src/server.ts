@@ -73,7 +73,7 @@ class Server{
                                       SET completed = true and completed_on = now() 
                                       where id =$1::bigint`
                                 ,[job.id])
-            // await  Server.pool.query('DELETE FROM QUEUE_ACTIVE where id =$1::bigint',[job.id])
+            await  Server.pool.query('DELETE FROM QUEUE_ACTIVE where id =$1::bigint',[job.id])
             await Server.pool.query('COMMIT')
             await job.remove()
           }
