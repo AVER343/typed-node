@@ -8,10 +8,11 @@ import ChevronIcon from '../../icons/chevron.svg';
 import ArrowIcon from '../../icons/arrow.svg';
 import BoltIcon from '../../icons/bolt.svg';
 import { DropdownItem } from "../dropDownMenu"
-import { MenuData, MenuTitles_ENUM, menu_representation } from "../MenuData";
+import styles from '../../header.module.css'
+import {  MenuTitles_ENUM, menu_representation } from "../MenuData";
 const MainMenu=(props:any)=>{
     const hasKey=(obj:any,key:any)=>obj && obj[key]
-    return <div className="menu">
+    return <div className={styles["menu"]}>
             { menu_representation.map((
                 (e,i)=><DropdownItem 
                         setActiveMenu={props.setActiveMenu}

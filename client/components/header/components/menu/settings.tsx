@@ -8,12 +8,14 @@ import CogIcon from '../../icons/cog.svg';
 import ChevronIcon from '../../icons/chevron.svg';
 import ArrowIcon from '../../icons/arrow.svg';
 import BoltIcon from '../../icons/bolt.svg';
+import styles from '../../header.module.css'
 import { DropdownItem } from "../dropDownMenu"
-import { MenuData } from "../MenuData";
+import { MenuData, MenuTitles_ENUM, menu_representation } from "../MenuData";
 const SettingsMenu=(props:{setActiveMenu:(el:string)=>void})=>{
-    return <div className="menu">
-    <DropdownItem setActiveMenu={props.setActiveMenu} goToMenu="main" leftIcon={<ArrowIcon />}>
-      <h2>My Tutorial</h2>
+    return <div className={styles["menu"]}>
+    <DropdownItem setActiveMenu={props.setActiveMenu} goToMenu="main" 
+                leftIcon={<ArrowIcon />}>
+      <h2>{menu_representation.filter(e=>e.goToMenu==MenuTitles_ENUM.SETTINGS)['0']['name']}</h2>
     </DropdownItem>
     {MenuData['settings']
             .map((e,i)=><DropdownItem key={i} 

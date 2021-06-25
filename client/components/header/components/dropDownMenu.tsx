@@ -6,7 +6,7 @@ import CogIcon from '../icons/cog.svg';
 import ChevronIcon from '../icons/chevron.svg';
 import ArrowIcon from '../icons/arrow.svg';
 import BoltIcon from '../icons/bolt.svg';
-
+import styles from '../header.module.css'
 import React, { useState, useEffect, useRef, Children } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import MainMenu from './menu/main';
@@ -29,7 +29,7 @@ export default function DropdownMenu() {
 
   
     return (
-      <div className="dropdown" 
+      <div className={styles["dropdown" ]}
             style={{ height: parseInt(menuHeight.toString())+34 }} 
             ref={dropdownRef}>
   
@@ -64,10 +64,10 @@ export default function DropdownMenu() {
   }
   export function DropdownItem(props:{setActiveMenu:any,goToMenu?:string,leftIcon?:any,children?:any,rightIcon?:any}) {
     return (
-      <a href="#" className="menu-item" onClick={() => props.goToMenu && props.setActiveMenu(props.goToMenu)}>
-        <span className="icon-button">{props.leftIcon}</span>
+      <a href="#" className={styles["menu-item"]} onClick={() => props.goToMenu && props.setActiveMenu(props.goToMenu)}>
+        <span className={styles["icon-button"]}>{props.leftIcon}</span>
         {props.children}
-        <span className="icon-right">{props.rightIcon}</span>
+        <span className={styles["icon-right"]}>{props.rightIcon}</span>
       </a>
     );
   }

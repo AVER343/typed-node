@@ -7,14 +7,15 @@ import CogIcon from '../../icons/cog.svg';
 import ChevronIcon from '../../icons/chevron.svg';
 import ArrowIcon from '../../icons/arrow.svg';
 import BoltIcon from '../../icons/bolt.svg';
+import styles from '../../header.module.css'
 import { DropdownItem } from "../dropDownMenu"
-import { MenuData } from "../MenuData";
+import { MenuData, MenuTitles_ENUM, menu_representation } from "../MenuData";
 const RegisterMenu=(props:any)=>{
-    return <div className="menu">
+    return <div className={styles["menu"]}>
     <DropdownItem setActiveMenu={props.setActiveMenu} 
                   goToMenu="main" 
                   leftIcon={<ArrowIcon />}>
-      <h2>Animals</h2>
+  <h2>{menu_representation.filter(e=>e.goToMenu==MenuTitles_ENUM.REGISTER)['0']['name']}</h2>
     </DropdownItem>
     {MenuData['register'].map((e,i)=><DropdownItem key={i}
                                      setActiveMenu={props.setActiveMenu} 

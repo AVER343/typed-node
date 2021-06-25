@@ -9,7 +9,7 @@ import BoltIcon from './icons/bolt.svg';
 import DropdownMenu from './components/dropDownMenu'
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-
+import styles from './header.module.css'
 function HeaderComponent() {
   return (
     <Navbar>
@@ -26,8 +26,8 @@ function HeaderComponent() {
 
 function Navbar(props) {
   return (
-    <nav className="navbar">
-      <ul className="navbar-nav">{props.children}</ul>
+    <nav className={styles["navbar"]}>
+      <ul className={styles["navbar-nav"]}>{props.children}</ul>
     </nav>
   );
 }
@@ -36,8 +36,8 @@ function NavItem(props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <li className="nav-item">
-      <a href="#" className="icon-button" onClick={() => setOpen(!open)}>
+    <li className={styles["nav-item"]}>
+      <a href="#" className={styles["icon-button"]} onClick={() => setOpen(!open)}>
         {props.icon}
       </a>
 
