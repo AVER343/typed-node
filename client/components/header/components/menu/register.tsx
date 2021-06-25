@@ -8,6 +8,7 @@ import ChevronIcon from '../../icons/chevron.svg';
 import ArrowIcon from '../../icons/arrow.svg';
 import BoltIcon from '../../icons/bolt.svg';
 import { DropdownItem } from "../dropDownMenu"
+import { MenuData } from "../MenuData";
 const RegisterMenu=(props:any)=>{
     return <div className="menu">
     <DropdownItem setActiveMenu={props.setActiveMenu} 
@@ -15,10 +16,9 @@ const RegisterMenu=(props:any)=>{
                   leftIcon={<ArrowIcon />}>
       <h2>Animals</h2>
     </DropdownItem>
-    {[{
-        leftIcon:'🐸',
-         name:'Login'
-    }].map((e,i)=><DropdownItem key={i} setActiveMenu={props.setActiveMenu} leftIcon={e.leftIcon}>{e.name}</DropdownItem>)}
+    {MenuData['register'].map((e,i)=><DropdownItem key={i}
+                                     setActiveMenu={props.setActiveMenu} 
+                                     {...e}>{e.name}</DropdownItem>)}
     </div>
 }
 export default RegisterMenu

@@ -8,23 +8,18 @@ import ChevronIcon from '../../icons/chevron.svg';
 import ArrowIcon from '../../icons/arrow.svg';
 import BoltIcon from '../../icons/bolt.svg';
 import { DropdownItem } from "../dropDownMenu"
+import { MenuData, MenuTitles_ENUM, menu_representation } from "../MenuData";
 const MainMenu=(props:any)=>{
+    const hasKey=(obj:any,key:any)=>obj && obj[key]
     return <div className="menu">
-            <DropdownItem setActiveMenu={props.setActiveMenu}>My Profile</DropdownItem>
-            <DropdownItem
-                leftIcon={<CogIcon />}
-                rightIcon={<ChevronIcon />}
-                setActiveMenu={props.setActiveMenu}
-                goToMenu="settings">
-              Settings
-            </DropdownItem>
-            <DropdownItem
-                leftIcon="🦧"
-                rightIcon={<ChevronIcon />}
-                setActiveMenu={props.setActiveMenu}
-                goToMenu="animals">
-              Animals
-            </DropdownItem>
-        </div>
+            { menu_representation.map((
+                (e,i)=><DropdownItem 
+                        setActiveMenu={props.setActiveMenu}
+                        goToMenu={menu_representation[i]['goToMenu']}
+                        key={i}>
+                            {menu_representation[i]['goToMenu'].charAt(0).toUpperCase() 
+                            + menu_representation[i]['goToMenu'].slice(1)}
+                        </DropdownItem>))}
+            </div>
 }
 export default MainMenu
