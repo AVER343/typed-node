@@ -12,6 +12,7 @@ import { CSSTransition } from 'react-transition-group';
 import MainMenu from './menu/main';
 import SettingsMenu from './menu/settings';
 import RegisterMenu from './menu/register';
+import { MenuTitles_ENUM } from './MenuData';
 export default function DropdownMenu() {
     const [activeMenu, setActiveMenu] = useState('main');
     const [menuHeight, setMenuHeight] = useState(0);
@@ -21,7 +22,7 @@ export default function DropdownMenu() {
       setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
     }, [])
   
-    function calcHeight(el) {
+    function calcHeight(el:any) {
       const height = el.offsetHeight;
       setMenuHeight(height);
     }
@@ -33,7 +34,7 @@ export default function DropdownMenu() {
             ref={dropdownRef}>
   
         <CSSTransition
-          in={activeMenu === 'main'}
+          in={activeMenu === MenuTitles_ENUM.MAIN}
           timeout={500}
           classNames="menu-primary"
           unmountOnExit
@@ -42,7 +43,7 @@ export default function DropdownMenu() {
         </CSSTransition>
   
         <CSSTransition
-          in={activeMenu === 'settings'}
+          in={activeMenu === MenuTitles_ENUM.SETTINGS}
           timeout={500}
           classNames="menu-secondary"
           unmountOnExit
@@ -51,7 +52,7 @@ export default function DropdownMenu() {
         </CSSTransition>
   
         <CSSTransition
-          in={activeMenu === 'animals'}
+          in={activeMenu ===  MenuTitles_ENUM.REGISTER}
           timeout={500}
           classNames="menu-secondary"
           unmountOnExit
