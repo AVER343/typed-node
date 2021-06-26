@@ -42,7 +42,7 @@
   }
   
   .icon-button svg { 
-    fill: var(--text-color);
+    fill: var(--svg-background);
     width: 20px;
     height: 20px;
   }
@@ -86,7 +86,7 @@
   }
   
   .menu-item:hover {
-    background-color: #525357;
+    background-color: var(--bg-secondary);
   }
   
   .icon-right {
