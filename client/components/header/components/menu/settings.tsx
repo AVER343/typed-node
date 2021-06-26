@@ -13,12 +13,12 @@ import { DropdownItem } from "../dropDownMenu"
 import { MenuData, MenuTitles_ENUM, menu_representation } from "../MenuData";
 const SettingsMenu=(props:{setActiveMenu:(el:string)=>void})=>{
     return <div className={styles["menu"]}>
-    <DropdownItem setActiveMenu={props.setActiveMenu} goToMenu="main" 
+    <DropdownItem index={0} setActiveMenu={props.setActiveMenu} goToMenu="main" isHeader={true}
                 leftIcon={ArrowIcon}>
       <h2>{menu_representation.filter(e=>e.goToMenu==MenuTitles_ENUM.SETTINGS)['0']['name']}</h2>
     </DropdownItem>
     {MenuData['settings']
-            .map((e,i)=><DropdownItem key={i} 
+            .map((e,i)=><DropdownItem index={i+1} key={i} 
                     {...e}
                     setActiveMenu={props.setActiveMenu}>
                     {e.name}</DropdownItem>)}

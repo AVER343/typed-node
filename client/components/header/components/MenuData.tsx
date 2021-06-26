@@ -12,31 +12,15 @@ interface menu_props{
 export let MenuData:{[id in MenuTitles_ENUM]:menu_props[]}={
     main:[{
         leftIcon:'asdasd',
-        goToMenu:MenuTitles_ENUM.REGISTER,
-        name:'REGISTER'
-    },{
-        leftIcon:'asdasd',
         goToMenu:MenuTitles_ENUM.SETTINGS,
         name:'SETTINGS'
-    }],
-    register:[{
-        leftIcon:'asdasd',
-        goToMenu:MenuTitles_ENUM.MAIN,
-        name:'MAIN'
     },{
-        leftIcon:'asdasd',
-        goToMenu:MenuTitles_ENUM.SETTINGS,
-        name:'SETTINGS'
-    }],
-    settings:[{
         leftIcon:'asdasd',
         goToMenu:MenuTitles_ENUM.REGISTER,
         name:'REGISTER'
-    },{
-        leftIcon:'asdasd',
-        goToMenu:MenuTitles_ENUM.MAIN,
-        name:'MAIN'
-    }]
+    },],
+    register:[],
+    settings:[]
 }
 interface main_menu_props extends menu_props{
     goToMenu:MenuTitles_ENUM;

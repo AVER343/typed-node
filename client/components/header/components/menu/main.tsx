@@ -7,11 +7,12 @@ const MainMenu=(props:any)=>{
     return <div className={styles["menu"]}>
             { menu_representation.map((
                 (e,i)=><DropdownItem 
+                        index={i}
+                        isHeader={i==0?true:false}
                         setActiveMenu={props.setActiveMenu}
                         goToMenu={menu_representation[i]['goToMenu']}
                         key={i}>
-                            {menu_representation[i]['goToMenu'].charAt(0).toUpperCase() 
-                            + menu_representation[i]['goToMenu'].slice(1)}
+                          {menu_representation[i]['goToMenu'].charAt(0).toUpperCase() + menu_representation[i]['goToMenu'].slice(1)}
                         </DropdownItem>))}
             </div>
 }

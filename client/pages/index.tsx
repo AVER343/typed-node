@@ -6,7 +6,6 @@ import HeaderComponent from '../components/header/index'
 // import App from '../components/header/index'
 export default function Home(props:any) {
   return (<div>
-            <HeaderComponent/>
           </div>
   )
 }

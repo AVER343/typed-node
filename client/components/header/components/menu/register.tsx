@@ -5,12 +5,14 @@ import { DropdownItem } from "../dropDownMenu"
 import { MenuData, MenuTitles_ENUM, menu_representation } from "../MenuData";
 const RegisterMenu=(props:any)=>{
     return <div className={styles["menu"]}>
-    <DropdownItem setActiveMenu={props.setActiveMenu} 
+    <DropdownItem index={0} 
+                  isHeader={true}
+                  setActiveMenu={props.setActiveMenu} 
                   goToMenu="main" 
                   leftIcon={<ArrowIcon/>}>
   <h2>{menu_representation.filter(e=>e.goToMenu==MenuTitles_ENUM.REGISTER)['0']['name']}</h2>
     </DropdownItem>
-    {MenuData['register'].map((e,i)=><DropdownItem key={i}
+    {MenuData['register'].map((e,i)=><DropdownItem key={i} index={i+1}
                                      setActiveMenu={props.setActiveMenu} 
                                      {...e}>{e.name}</DropdownItem>)}
     </div>
