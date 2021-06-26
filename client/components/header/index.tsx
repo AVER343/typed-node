@@ -1,30 +1,29 @@
-import BellIcon from './icons/bell.svg';
-import MessengerIcon from './icons/messenger.svg';
-import CaretIcon from './icons/caret.svg';
-import PlusIcon from './icons/plus.svg';
-import CogIcon from './icons/cog.svg';
-import ChevronIcon from './icons/chevron.svg';
-import ArrowIcon from './icons/arrow.svg';
-import BoltIcon from './icons/bolt.svg';
+const BellIcon = require('./icons/bell.svg')
+const MessengerIcon = require('./icons/messenger.svg')
+const CaretIcon = require('./icons/caret.svg') ;
+const  PlusIcon =  require("./icons/plus.svg");
 import DropdownMenu from './components/dropDownMenu'
 import React, { useState, useEffect, useRef } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import styles from './header.module.css'
+import { useColorMode } from '@chakra-ui/react';
+import { DARK_SVG ,LIGHT_SVG} from './icons/THEME_SVG';
 function HeaderComponent() {
+  const {colorMode,toggleColorMode}=useColorMode()
   return (
     <Navbar>
-      <NavItem icon={<PlusIcon />}  />
-      <NavItem icon={<BellIcon />} />
-      <NavItem icon={<MessengerIcon />} />
-
-      <NavItem icon={<CaretIcon />}>
+      <NavItem icon={colorMode!=='dark'?<DARK_SVG onClick={toggleColorMode}/>
+                                      :<LIGHT_SVG onClick={toggleColorMode}/>}/>
+      <NavItem icon={<PlusIcon/>}  />
+      <NavItem icon={<BellIcon/>} />
+      <NavItem icon={<MessengerIcon/>} />
+      <NavItem icon={<CaretIcon/>}>
         <DropdownMenu></DropdownMenu>
       </NavItem>
     </Navbar>
   );
 }
 
-function Navbar(props) {
+function Navbar(props:any) {
   return (
     <nav className={styles["navbar"]}>
       <ul className={styles["navbar-nav"]}>{props.children}</ul>
@@ -32,7 +31,7 @@ function Navbar(props) {
   );
 }
 
-function NavItem(props) {
+function NavItem(props:any) {
   const [open, setOpen] = useState(false);
 
   return (

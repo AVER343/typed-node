@@ -1,15 +1,7 @@
 import React from "react"
-import BellIcon from '../../icons/bell.svg';
-import MessengerIcon from '../../icons/messenger.svg';
-import CaretIcon from '../../icons/caret.svg';
-import PlusIcon from '../../icons/plus.svg';
-import CogIcon from '../../icons/cog.svg';
-import ChevronIcon from '../../icons/chevron.svg';
-import ArrowIcon from '../../icons/arrow.svg';
-import BoltIcon from '../../icons/bolt.svg';
 import { DropdownItem } from "../dropDownMenu"
 import styles from '../../header.module.css'
-import {  MenuTitles_ENUM, menu_representation } from "../MenuData";
+import {  menu_representation } from "../MenuData";
 const MainMenu=(props:any)=>{
     const hasKey=(obj:any,key:any)=>obj && obj[key]
     return <div className={styles["menu"]}>
