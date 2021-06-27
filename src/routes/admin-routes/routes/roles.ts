@@ -23,13 +23,13 @@ Roles.post('*/roles',
                 let result = validationResult(req)
                 if(!result.isEmpty())
                 {
-                    return HandleResponse(res,result.array(),'error')
+                    return HandleResponse(res,result.array(),{type:'error',statusCode:400})
                 }
             let {email,user_role}:{email:string,user_role:string} = req.body
             let user = await User.findOne({email})
             if(!user)
             {
-                return HandleResponse(res,Messages.USER_NOT_EXIST,'error')
+                return HandleResponse(res,Messages.USER_NOT_EXIST,{type:'error',statusCode:400})
             }
             await Server.pool.query(`UPDATE USERS 
                                      SET user_role_type_id=(SELECT id FROM USER_ROLE_TYPE WHERE user_role=$2) 
@@ -39,7 +39,7 @@ Roles.post('*/roles',
             return res.send(user?.getUser())
         }
         catch(e:any){
-            return HandleResponse(res,e.message||'Something went wrong !','error')
+            return HandleResponse(res,e.message||'Something went wrong !',{type:'error',statusCode:400})
         }
         })
 // Roles.get('*/roles',
@@ -50,13 +50,13 @@ Roles.post('*/roles',
 //                 let result = validationResult(req)
 //                 if(!result.isEmpty())
 //                 {
-//                     return HandleResponse(res,result.array(),'error')
+//                     return HandleResponse(res,result.array(),{type:'error',statusCode:400})
 //                 }
 //                 await Server.pool.query('SELECT ')
 //                 return res.send(200)
 //             }
 //             catch(e:any){
-//                 return HandleResponse(res,e.message,'error')
+//                 return HandleResponse(res,e.message,{type:'error',statusCode:400})
 //             }
 //         })
     export default Roles

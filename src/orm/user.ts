@@ -33,7 +33,7 @@ class User{
                     query = query + ' or '
                 }
                 args.push(hasKey(user,e))
-                query = query + (e).toString() +`= $${args.length}` ;
+                query = query + (e).toString().toLowerCase() +`= $${args.length}` ;
             }
         })
         query = query + ' LIMIT 1 ;'

@@ -8,10 +8,10 @@ Logout.post('*/logout',
         async(req:Request,res:Response)=>{
            try{
                await res.clearCookie('JWT')
-              return HandleResponse(res,Messages.LOGGED_OUT,'success')
+              return HandleResponse(res,Messages.LOGGED_OUT,{type:'success',statusCode:200})
            }
            catch(e:any){
-            return HandleResponse(res,e.message||'Something went wrong !','error')
+            return HandleResponse(res,e.message||'Something went wrong !',{type:'error',statusCode:400})
         }
     })
     export default Logout

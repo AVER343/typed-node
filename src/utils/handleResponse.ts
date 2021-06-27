@@ -15,16 +15,27 @@ export enum Messages{
    USER_UPDATED_USING_OTP='Updated user !',
    USER_VERIFIED='Verified user !'
 }
-const HandleResponse=(res:Response,messages:Messages|ValidationError[],type:ResponseType|null)=>{
+const HandleResponse=(res:Response,messages:Messages|ValidationError[],{type='error',statusCode}:{type:ResponseType|null,statusCode:number})=>{
    ///handling express validators
+   if(!statusCode)
+   {
+      if(type=='error')
+      {
+         statusCode=400
+      }
+      if(type=='success')
+      {
+         statusCode=200
+      }
+   }
    if(typeof messages ==='object')
    {
       let message
       for(message in messages)
       {
-         return res.send({messages:messages.map((e:ValidationError)=>({message:e.msg,type}))})
+         return res.status(statusCode).send({messages:messages.map((e:ValidationError)=>({message:e.msg,type}))})
       }
    }
-   return res.send({messages:[{message:messages,type}]})
+   return res.status(statusCode).send({messages:[{message:messages,type}]})
 }
 export default HandleResponse

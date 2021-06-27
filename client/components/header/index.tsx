@@ -10,11 +10,8 @@ import { useColorMode } from '@chakra-ui/react';
 import { DARK_SVG ,LIGHT_SVG} from './icons/THEME_SVG';
 function HeaderComponent() {
   const {colorMode,toggleColorMode}=useColorMode()
-  const [session, loading] = useSession()
   return (
     <Navbar>
-      <NavItem icon={''}/>
-      {session?JSON.stringify(session):'sign in'}
       <NavItem icon={colorMode!=='dark'?<DARK_SVG onClick={toggleColorMode}/>
                                       :<LIGHT_SVG onClick={toggleColorMode}/>}/>
       <NavItem icon={<PlusIcon/>}  />

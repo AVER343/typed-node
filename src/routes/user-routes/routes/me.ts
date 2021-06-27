@@ -14,7 +14,7 @@ Me.post('*/me',
                 return res.send(user.getUser())
            }
            catch(e:any){
-            return HandleResponse(res,e.message||'Something went wrong !','error')
+            return HandleResponse(res,e.message||'Something went wrong !',{type:'error',statusCode:400})
            }
     })
     export default Me

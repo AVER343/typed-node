@@ -13,23 +13,23 @@ Login.post('*/login',
                 let result = validationResult(req)
                 if(!result.isEmpty())
                 {
-                    return HandleResponse(res,result.array(),'error')
+                    return HandleResponse(res,result.array(),{type:'error',statusCode:400})
                 }
                 let user  = (await User.findOne(req.body))
                 if(!user)
                 {
-                    return HandleResponse(res,Messages.USER_NOT_EXIST,'error')
+                    return HandleResponse(res,Messages.USER_NOT_EXIST,{type:'error',statusCode:400})
                 }
                 if(!user.getUser()['user_verified'])
                 {
-                    return HandleResponse(res,Messages.EMAIL_NOT_VERIFIED,'error')
+                    return HandleResponse(res,Messages.EMAIL_NOT_VERIFIED,{type:'error',statusCode:400})
                 }
                 let JWT = await user.setJWT()
                 // console.log()
               return res.cookie('JWT',JWT,{maxAge:120*60*1000}).send(user.getUser())
            }
            catch(e:any){
-            return HandleResponse(res,e.message||'Something went wrong !','error')
+            return HandleResponse(res,e.message||'Something went wrong !',{type:'error',statusCode:400})
         }
     })
     export default Login

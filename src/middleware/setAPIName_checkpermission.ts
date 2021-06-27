@@ -29,7 +29,7 @@ const set_API_NAME=(api_name:API_NAMES)=>{
            const has_permission = await hasPermission(req.user?.user_role_type_id,api_name,req.user?.id)
            if(!has_permission)
            {
-               return HandleResponse(res,Messages.UNAUTHORIZED,'error')
+               return HandleResponse(res,Messages.UNAUTHORIZED,{type:'error',statusCode:400})
            }
            return next();
         }

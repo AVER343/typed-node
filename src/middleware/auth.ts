@@ -7,7 +7,7 @@ let authentication =async(req:any,res:any,next:any)=>{
    try{
        if(!req.cookies.JWT)
        {
-            return HandleResponse(res,Messages.UNAUTHENTICATED,'error')
+            return HandleResponse(res,Messages.UNAUTHENTICATED,{type:'error',statusCode:400})
        }
         const JWT = req.cookies.JWT 
         let verified_user = await jwt.verify(JWT,`process.env.JWT_SECRET`)
@@ -29,7 +29,7 @@ let authentication =async(req:any,res:any,next:any)=>{
    }
    catch(e:any)
    {
-      return HandleResponse(res,e.message,'error')
+      return HandleResponse(res,e.message,{type:'error',statusCode:400})
    }
 }
 export default authentication
