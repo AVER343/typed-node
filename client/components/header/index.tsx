@@ -2,6 +2,7 @@ const BellIcon = require('./icons/bell.svg')
 const MessengerIcon = require('./icons/messenger.svg')
 const CaretIcon = require('./icons/caret.svg') ;
 const  PlusIcon =  require("./icons/plus.svg");
+import { useSession } from "next-auth/client"
 import DropdownMenu from './components/dropDownMenu'
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './header.module.css'
@@ -9,8 +10,11 @@ import { useColorMode } from '@chakra-ui/react';
 import { DARK_SVG ,LIGHT_SVG} from './icons/THEME_SVG';
 function HeaderComponent() {
   const {colorMode,toggleColorMode}=useColorMode()
+  const [session, loading] = useSession()
   return (
     <Navbar>
+      <NavItem icon={''}/>
+      {session?JSON.stringify(session):'sign in'}
       <NavItem icon={colorMode!=='dark'?<DARK_SVG onClick={toggleColorMode}/>
                                       :<LIGHT_SVG onClick={toggleColorMode}/>}/>
       <NavItem icon={<PlusIcon/>}  />
