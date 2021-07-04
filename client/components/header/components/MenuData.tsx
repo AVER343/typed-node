@@ -31,11 +31,11 @@ export let menu_representation:main_menu_props[]=[
         name:'Main'
     },
     {
+        goToMenu:MenuTitles_ENUM.SETTINGS,
+        name:'Settings'
+    },
+    {
         goToMenu:MenuTitles_ENUM.REGISTER,
         name:'Register'
     },
-    {
-        goToMenu:MenuTitles_ENUM.SETTINGS,
-        name:'Settings'
-    }
 ]

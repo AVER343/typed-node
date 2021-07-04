@@ -62,10 +62,13 @@ export default function DropdownMenu() {
       </div>
     );
   }
-  export function DropdownItem(props:{index:number,isHeader?:boolean,setActiveMenu:any,goToMenu?:string,leftIcon?:any,children?:any,rightIcon?:any}) {
+  export function DropdownItem(props:{onClick?:any,index:number,isHeader?:boolean,setActiveMenu:any,goToMenu?:string,leftIcon?:any,children?:any,rightIcon?:any}) {
     return (
       <div className={styles["menu-item"]+ ` ${props.isHeader && styles['menu-item-header']}`} 
-        onClick={() =>!props.isHeader && props.goToMenu && props.setActiveMenu(props.goToMenu)}>
+        onClick={() =>{
+          !props.isHeader && props.goToMenu && props.setActiveMenu(props.goToMenu)
+          props.onClick && props.onClick()
+        }}>
         <span className={styles["icon-button"]} onClick={() => props.goToMenu && props.setActiveMenu(props.goToMenu)}>{props.leftIcon}</span>
         {props.children}
         <span className={styles["icon-right"]}>{props.rightIcon}</span>

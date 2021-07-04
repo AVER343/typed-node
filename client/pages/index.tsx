@@ -8,10 +8,7 @@ import HeaderComponent from '../components/header/index'
 export default function Home(props:any) {
   const [session,loading]=useSession() 
   return (<div>
-              <Button onClick={()=>{
-                  console.log(session);
-                  console.log(document.cookie)
-              }}>CLICK ME</Button>
+             {JSON.stringify(session)}
           </div>
   )
 }

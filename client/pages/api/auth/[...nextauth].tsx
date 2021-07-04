@@ -10,7 +10,6 @@ export default NextAuth({
     },
     session: async (session, user:any) => {
         session.user = user.user;
-        console.log(user)
         return Promise.resolve(session)
     }
 },
@@ -23,16 +22,16 @@ export default NextAuth({
         password: {  label: "Password", type: "password",placeholder: "*********" }
       },
       async authorize(credentials:any, req) {
-          try{
+            try{
             const res = await axios.post('http://node-app:4200/users/login',credentials)
-            console.log(res.data)
+            console.log({data:res.data})
             if(res.status==200)
             {
               return res.data
             }
           }
-        catch(e){
-        console.log(e)
+        catch(e:any){
+        console.log(e.response.data)
         }
         return null
       }

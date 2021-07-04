@@ -18,10 +18,16 @@ import {
     Checkbox,
     Button
   } from '@chakra-ui/react'
-  
-  const VARIANT_COLOR = 'teal'
+import { signIn, useSession } from 'next-auth/client'
+import { useRouter } from 'next/dist/client/router'
+import { useEffect, useState } from 'react'
+const VARIANT_COLOR = 'teal'
 
 const LoginArea = () => {
+  const [session,loading]= useSession()
+  const router = useRouter()
+  useEffect(()=>{
+  },[session,router])
   return (
     <Flex minHeight='100vh' width='full' align='center' justifyContent='center'>
       <Box 
@@ -53,18 +59,19 @@ const LoginHeader = () => {
   }
   
   const LoginForm = () => {
+    const [email,setEmail]=useState('')
+    const [password,setPassword]=useState('')
     return (
       <Box my={8} textAlign='left'>
         <form>
-  
           <FormControl>
             <FormLabel>Email address</FormLabel>
-            <Input type='email' placeholder='Enter your email address' />
+            <Input value={email} type='email'onChange={e=>setEmail(e.target.value)}  placeholder='Enter your email address' />
           </FormControl>
   
           <FormControl mt={4}>
             <FormLabel>Password</FormLabel>
-            <Input type='password' placeholder='Enter your password' />
+            <Input value={password} onChange={e=>setPassword(e.target.value)} type='password' placeholder='Enter your password' />
           </FormControl>
   
           <Stack isInline justifyContent='space-between' mt={4}>
@@ -76,7 +83,10 @@ const LoginHeader = () => {
               </Box>
           </Stack>
   
-          <Button className={'important-success-button'} outline={0} width='full' mt={4}>Sign In</Button>
+          <Button className={'important-success-button'} 
+          outline={0} width='full' mt={4}
+          onClick={()=>signIn('credentials',{email,password})}>
+            Sign In</Button>
         </form>
       </Box>
     )
