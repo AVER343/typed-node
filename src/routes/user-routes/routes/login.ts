@@ -1,9 +1,11 @@
+
 import express ,{Request,Response} from 'express'
 import {body,validationResult} from 'express-validator'
+import pool from '../../../db/database-connection'
 import User from '../../../orm/user'
 import HandleResponse, { Messages } from '../../../utils/handleResponse'
 // import { ROLES } from '../../../utils/roles'
-
+import bcrypt from 'bcryptjs'
 const Login = express.Router()
 Login.post('*/login',
         body('email').isEmail().withMessage(('Invalid email !')),
@@ -23,6 +25,14 @@ Login.post('*/login',
                 if(!user.getUser()['user_verified'])
                 {
                     return HandleResponse(res,Messages.EMAIL_NOT_VERIFIED,{type:'error',statusCode:400})
+                }
+                console.log({id:user.getUser().id})
+                const Us_u =await pool.query('SELECT * FROM USERS WHERE id = $1;',[user.getUser().id]) 
+                const isCorrectPassword = await bcrypt.compare(req.body.password,Us_u.rows[0]['password'])
+                console.log({isCorrectPassword})
+                if(!isCorrectPassword)
+                {
+                    return HandleResponse(res,Messages.INCORRECT_PASSWOD,{type:'error',statusCode:400})
                 }
                 let JWT = await user.setJWT()
                 // console.log()

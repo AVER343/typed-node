@@ -5,12 +5,12 @@ import { hasKey} from '../utils/utisl'
 
 let authentication =async(req:any,res:any,next:any)=>{
    try{
-       if(!req.cookies.JWT)
+       if(!req.header('Authorization'))
        {
-            return HandleResponse(res,Messages.UNAUTHENTICATED,{type:'error',statusCode:400})
+        throw new Error(Messages.UNAUTHENTICATED)
        }
-        const JWT = req.cookies.JWT 
-        let verified_user = await jwt.verify(JWT,`process.env.JWT_SECRET`)
+        const token = req.header('Authorization').replace('Bearer ','')
+        let verified_user = await jwt.verify(token,`process.env.JWT_SECRET`)
         if(!verified_user)
             {
                 throw new Error('Verification failed . Please login again.')

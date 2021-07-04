@@ -13,6 +13,7 @@ export enum Messages{
    OTP_SENT='OTP has been sent to your email',
    UNAUTHENTICATED='Unauthenticated ! ',
    USER_UPDATED_USING_OTP='Updated user !',
+   INCORRECT_PASSWOD='Incorrect Credentials !',
    USER_VERIFIED='Verified user !'
 }
 const HandleResponse=(res:Response,messages:Messages|ValidationError[],{type='error',statusCode}:{type:ResponseType|null,statusCode:number})=>{

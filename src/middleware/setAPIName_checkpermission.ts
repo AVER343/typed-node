@@ -19,6 +19,7 @@ const hasPermission=async (ROLE_TYPE_ID:string|undefined,API_NAME:API_NAMES,user
                 JOIN API_NAMES AP ON AP.id = SP.api_id
                 WHERE user_id = $3 and AP.api_name = $2`:''} ;
         `,args)
+    console.log(result.rows,args)
     let permission_given = result.rowCount>0
            
     return permission_given

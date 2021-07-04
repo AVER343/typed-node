@@ -66,7 +66,7 @@ const LoginHeader = () => {
         <form>
           <FormControl>
             <FormLabel>Email address</FormLabel>
-            <Input value={email} type='email'onChange={e=>setEmail(e.target.value)}  placeholder='Enter your email address' />
+            <Input value={email} type='email' onChange={e=>setEmail(e.target.value)}  placeholder='Enter your email address' />
           </FormControl>
   
           <FormControl mt={4}>
@@ -85,7 +85,9 @@ const LoginHeader = () => {
   
           <Button className={'important-success-button'} 
           outline={0} width='full' mt={4}
-          onClick={()=>signIn('credentials',{email,password})}>
+          onClick={async()=>{
+            await signIn('credentials',{email,password,callbackUrl: 'http://localhost:3000' })
+          }}>
             Sign In</Button>
         </form>
       </Box>

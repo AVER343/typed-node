@@ -42,21 +42,21 @@ Roles.post('*/roles',
             return HandleResponse(res,e.message||'Something went wrong !',{type:'error',statusCode:400})
         }
         })
-// Roles.get('*/roles',
-//         authentication,
-//         set_API_NAME(API_NAMES.GET_ROLE),
-//         async (req:Request,res:Response)=>{
-//             try{
-//                 let result = validationResult(req)
-//                 if(!result.isEmpty())
-//                 {
-//                     return HandleResponse(res,result.array(),{type:'error',statusCode:400})
-//                 }
-//                 await Server.pool.query('SELECT ')
-//                 return res.send(200)
-//             }
-//             catch(e:any){
-//                 return HandleResponse(res,e.message,{type:'error',statusCode:400})
-//             }
-//         })
+Roles.get('*/roles',
+        authentication,
+        set_API_NAME(API_NAMES.GET_ROLE),
+        async (req:Request,res:Response)=>{
+            try{
+                let result = validationResult(req)
+                if(!result.isEmpty())
+                {
+                    return HandleResponse(res,result.array(),{type:'error',statusCode:400})
+                }
+                let roles = await Server.pool.query('SELECT * FROM USER_ROLE_TYPE; ')
+                return res.send(roles)
+            }
+            catch(e:any){
+                return HandleResponse(res,e.message,{type:'error',statusCode:400})
+            }
+        })
     export default Roles

@@ -32,7 +32,7 @@ class User{
                 else{
                     query = query + ' or '
                 }
-                args.push(hasKey(user,e))
+                args.push(hasKey(user,e).toString().toLowerCase())
                 query = query + (e).toString().toLowerCase() +`= $${args.length}` ;
             }
         })

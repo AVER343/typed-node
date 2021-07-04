@@ -17,10 +17,10 @@ import HeaderComponent from '../components/header'
 import { Provider } from "next-auth/client"
 function MyApp({ Component, pageProps }: AppProps) {
   return <ChakraProvider theme={theme}>
-      <Provider session={pageProps.session}>
-            <HeaderComponent/>
-          <Component {...pageProps} />
-      </Provider>
+          <Provider session={pageProps.session}>
+                <HeaderComponent/>
+              <Component {...pageProps} />
+          </Provider>
         </ChakraProvider>
 }
 export default MyApp
