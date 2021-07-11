@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "configure": "bash configure.db.sh",
-    "start": "ts-node-dev index.ts",
+    "start": "nodemon index.ts",
     "dev": "cd client && npm run dev"
   },
   "keywords": [],

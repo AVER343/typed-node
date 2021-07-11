@@ -2,15 +2,14 @@ import jwt from 'jsonwebtoken'
 import HandleResponse, { Messages } from '../utils/handleResponse'
 import User from '../orm/user'
 import { hasKey} from '../utils/utisl'
-
 let authentication =async(req:any,res:any,next:any)=>{
    try{
-       if(!req.header('Authorization'))
-       {
-        throw new Error(Messages.UNAUTHENTICATED)
-       }
-        const token = req.header('Authorization').replace('Bearer ','')
-        let verified_user = await jwt.verify(token,`process.env.JWT_SECRET`)
+    if(!req.cookies.JWT)
+    {
+         return HandleResponse(res,Messages.UNAUTHENTICATED,{type:'error',statusCode:400})
+    }
+     const JWT = req.cookies.JWT 
+     let verified_user = await jwt.verify(JWT,`process.env.JWT_SECRET`)
         if(!verified_user)
             {
                 throw new Error('Verification failed . Please login again.')

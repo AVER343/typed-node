@@ -23,7 +23,6 @@ class QUEUES{
           {
             await QUEUES.REDIS_QUEUE[queues].clean(1)
           }
-          
     }
     static async listener(queue_name:QUEUE_TYPE,callback:(job:any)=>void){
         QUEUES.REDIS_QUEUE[queue_name].process(callback);
