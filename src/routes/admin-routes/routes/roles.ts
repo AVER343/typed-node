@@ -11,7 +11,7 @@ import { hasKey } from '../../../utils/utisl'
 const Roles = express.Router()
 Roles.put('*/roles',
         authentication,
-        set_API_NAME(API_NAMES.POST_ROLE),
+        set_API_NAME(API_NAMES.PUT_ROLE),
         body('email').isEmail().withMessage(('Invalid email !')),
         body('user_role').isString().custom((value:string, { req }) => {
             if (!Object.keys(ROLES).includes(value.toUpperCase())) {

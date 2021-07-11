@@ -12,6 +12,8 @@ Login.post('*/login',
         body('password').isLength({min:5}).withMessage(('Invalid password !')),
         async(req:Request,res:Response)=>{
            try{
+               let io = express().get('io')
+                io.emit('hello', 'to all clients');
                 let result = validationResult(req)
                 if(!result.isEmpty())
                 {

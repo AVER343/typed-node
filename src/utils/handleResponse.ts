@@ -14,7 +14,8 @@ export enum Messages{
    UNAUTHENTICATED='Unauthenticated ! ',
    USER_UPDATED_USING_OTP='Updated user !',
    INCORRECT_PASSWOD='Incorrect Credentials !',
-   USER_VERIFIED='Verified user !'
+   USER_VERIFIED='Verified user !',
+   ROUTE_NOT_FOUND='Route not found !'
 }
 const HandleResponse=(res:Response,messages:Messages|ValidationError[],{type='error',statusCode}:{type:ResponseType|null,statusCode:number})=>{
    ///handling express validators

@@ -2,7 +2,6 @@ import Bull,{Queue} from 'bull'
 // import { job } from '../../interfaces/user';
 // import  nodemailer  from 'nodemailer'
 import { QUEUE_TYPE} from './utils/queue-names'
-// import {PartialRecord} from './utils/queue-names'
 class QUEUES{
     //todo redis_que interface
     static REDIS_QUEUE:{[id:string]:Queue}
@@ -31,7 +30,6 @@ class QUEUES{
         QUEUES.REDIS_QUEUE[queue_name].on('completed',callback);
     }
     static async publisher(queue_name:QUEUE_TYPE,data:any,options:Bull.JobOptions){
-      console.log(options)
         QUEUES.REDIS_QUEUE[queue_name].add(data,{attempts:5,backoff:5000,...options})
     }
 }

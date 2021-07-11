@@ -37,7 +37,6 @@ class User{
             }
         })
         query = query + ' LIMIT 1 ;'
-        console.log(query,args)
        let result =  await User.pool.query(query,args)
         return result.rows[0] 
                 ? new User(result.rows[0])
